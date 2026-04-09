@@ -11,7 +11,7 @@ namespace BankAccountSimulation
         public decimal Balance { get; private set; }
         public BankAccountStatus Status { get; set; }
         public DateTime CreatedAt { get; set; }
-        public decimal WithdrawnToday { get; set; };
+        public decimal WithdrawnToday { get; set; }
         public DateTime LastWithdrawDate { get; set; }
         [SetsRequiredMembers]
         public BankAccount(string accountNumber, string ownerName, decimal balance)

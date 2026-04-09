@@ -1,0 +1,59 @@
+# ========================
+# Build Folders
+# ========================
+bin/
+obj/
+out/
+
+# ========================
+# Visual Studio / Rider / VS Code
+# ========================
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vscode/
+
+# ========================
+# Dotnet Core
+# ========================
+*.dll
+*.exe
+*.pdb
+*.cache
+*.log
+*.ide
+*.DS_Store
+
+# ========================
+# NuGet
+# ========================
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+project.lock.json
+project.fragment.lock.json
+
+# ========================
+# Rider
+# ========================
+.idea/
+
+# ========================
+# Publish output
+# ========================
+publish/
+
+# ========================
+# Test results
+# ========================
+TestResults/
+*.trx
+
+# ========================
+# Others
+# ========================
+*.vspscc
+*.vssscc

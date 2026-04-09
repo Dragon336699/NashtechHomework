@@ -12,3 +12,4 @@ D:\Rookie Nashtech\CSharpFundamentals\CSharpFundamentals\obj\Debug\net8.0\refint
 D:\Rookie Nashtech\CSharpFundamentals\CSharpFundamentals\obj\Debug\net8.0\NoteApplication.pdb
 D:\Rookie Nashtech\CSharpFundamentals\CSharpFundamentals\obj\Debug\net8.0\NoteApplication.genruntimeconfig.cache
 D:\Rookie Nashtech\CSharpFundamentals\CSharpFundamentals\obj\Debug\net8.0\ref\NoteApplication.dll
+D:\Rookie Nashtech\CSharpFundamentals\CSharpFundamentals\obj\Debug\net8.0\NoteApplication.sourcelink.json

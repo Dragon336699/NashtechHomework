@@ -12,3 +12,4 @@ D:\Rookie Nashtech\CSharpFundamentals\BankAccountSimulation\obj\Debug\net9.0\ref
 D:\Rookie Nashtech\CSharpFundamentals\BankAccountSimulation\obj\Debug\net9.0\BankAccountSimulation.pdb
 D:\Rookie Nashtech\CSharpFundamentals\BankAccountSimulation\obj\Debug\net9.0\BankAccountSimulation.genruntimeconfig.cache
 D:\Rookie Nashtech\CSharpFundamentals\BankAccountSimulation\obj\Debug\net9.0\ref\BankAccountSimulation.dll
+D:\Rookie Nashtech\CSharpFundamentals\BankAccountSimulation\obj\Debug\net9.0\BankAccountSimulation.sourcelink.json
