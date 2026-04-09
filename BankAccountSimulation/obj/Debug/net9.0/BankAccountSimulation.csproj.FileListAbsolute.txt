@@ -1,0 +1,14 @@
+D:\Rookie Nashtech\CSharpFundamentals\BankAccountSimulation\bin\Debug\net9.0\BankAccountSimulation.exe
+D:\Rookie Nashtech\CSharpFundamentals\BankAccountSimulation\bin\Debug\net9.0\BankAccountSimulation.deps.json
+D:\Rookie Nashtech\CSharpFundamentals\BankAccountSimulation\bin\Debug\net9.0\BankAccountSimulation.runtimeconfig.json
+D:\Rookie Nashtech\CSharpFundamentals\BankAccountSimulation\bin\Debug\net9.0\BankAccountSimulation.dll
+D:\Rookie Nashtech\CSharpFundamentals\BankAccountSimulation\bin\Debug\net9.0\BankAccountSimulation.pdb
+D:\Rookie Nashtech\CSharpFundamentals\BankAccountSimulation\obj\Debug\net9.0\BankAccountSimulation.GeneratedMSBuildEditorConfig.editorconfig
+D:\Rookie Nashtech\CSharpFundamentals\BankAccountSimulation\obj\Debug\net9.0\BankAccountSimulation.AssemblyInfoInputs.cache
+D:\Rookie Nashtech\CSharpFundamentals\BankAccountSimulation\obj\Debug\net9.0\BankAccountSimulation.AssemblyInfo.cs
+D:\Rookie Nashtech\CSharpFundamentals\BankAccountSimulation\obj\Debug\net9.0\BankAccountSimulation.csproj.CoreCompileInputs.cache
+D:\Rookie Nashtech\CSharpFundamentals\BankAccountSimulation\obj\Debug\net9.0\BankAccountSimulation.dll
+D:\Rookie Nashtech\CSharpFundamentals\BankAccountSimulation\obj\Debug\net9.0\refint\BankAccountSimulation.dll
+D:\Rookie Nashtech\CSharpFundamentals\BankAccountSimulation\obj\Debug\net9.0\BankAccountSimulation.pdb
+D:\Rookie Nashtech\CSharpFundamentals\BankAccountSimulation\obj\Debug\net9.0\BankAccountSimulation.genruntimeconfig.cache
+D:\Rookie Nashtech\CSharpFundamentals\BankAccountSimulation\obj\Debug\net9.0\ref\BankAccountSimulation.dll
