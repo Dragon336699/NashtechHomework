@@ -5,7 +5,8 @@ namespace BankAccountSimulation
 {
     public class BankAccount
     {
-        public decimal DailyWithdrawLimit = 50000000;
+        private decimal DailyWithdrawLimit = 50000000;
+        private decimal AnnualInterestRate = 0.08m;
         public required string AccountNumber { get; set; }
         public required string OwnerName { get; set; }
         public decimal Balance { get; private set; }
@@ -13,6 +14,7 @@ namespace BankAccountSimulation
         public DateTime CreatedAt { get; set; }
         public decimal WithdrawnToday { get; set; }
         public DateTime LastWithdrawDate { get; set; }
+        public DateTime LastInterestAddedMonthly {  get; set; }
         [SetsRequiredMembers]
         public BankAccount(string accountNumber, string ownerName, decimal balance)
         {
@@ -22,6 +24,7 @@ namespace BankAccountSimulation
             Status = BankAccountStatus.Active;
             CreatedAt = DateTime.Now;
             WithdrawnToday = 0;
+            LastInterestAddedMonthly = DateTime.Now;
         }
         public override string ToString()
         {
@@ -42,6 +45,8 @@ namespace BankAccountSimulation
 
         public void WithDrawMoney(decimal amount)
         {
+            ResetWithdrawDaily();
+
             if (amount <= 0)
                 throw new ArgumentOutOfRangeException("Amount must be greater than 0");
             if (Status == BankAccountStatus.Frozen)
@@ -58,12 +63,20 @@ namespace BankAccountSimulation
             if (WithdrawnToday + amount > DailyWithdrawLimit)
                 throw new InvalidOperationException("Daily withdraw limit exceeded");
             Balance -= amount;
-
             WithdrawnToday += amount;
             LastWithdrawDate = DateTime.Now;
         }
 
-        private void ResetWithdrawDaily ()
+        public int AddMonthlyInterest()
+        {
+            decimal monthlyRate = AnnualInterestRate / 12;
+            decimal interest = Balance * monthlyRate;
+            int interestFloor = (int)Math.Floor(interest);
+            Balance += interest;
+            return interestFloor;
+        }
+
+        private void ResetWithdrawDaily()
         {
             if (LastWithdrawDate.Date < DateTime.Now.Date)
             {

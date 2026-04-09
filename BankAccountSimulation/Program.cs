@@ -13,6 +13,9 @@ namespace BankAccountApp
         static void Main(string[] args)
         {
             ReadFile();
+
+            AddMonthlyInterest();
+
             while (true)
             {
                 Console.WriteLine("=== Bank Account System ===");
@@ -459,6 +462,19 @@ namespace BankAccountApp
             if (!string.IsNullOrWhiteSpace(transactionText))
             {
                 transactions = JsonSerializer.Deserialize<List<Transaction>>(transactionText);
+            }
+        }
+
+        public static void AddMonthlyInterest()
+        {
+            foreach (var account in bankAccounts)
+            {
+                if (account.LastInterestAddedMonthly.Month < DateTime.Now.Month)
+                {
+                    int interest = account.AddMonthlyInterest();
+                    account.LastInterestAddedMonthly = DateTime.Now;
+                    AddTransaction(account.AccountNumber, TransactionType.AddInterestMonthly, interest);
+                }
             }
         }
 

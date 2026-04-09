@@ -5,6 +5,7 @@
         Deposit,
         WithDraw,
         TransferIn,
-        TransferOut
+        TransferOut,
+        AddInterestMonthly
     }
 }
