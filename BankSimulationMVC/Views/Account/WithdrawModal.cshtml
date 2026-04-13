@@ -19,10 +19,10 @@
                 <div class="modal-body d-flex flex-column">
                     <label asp-for="AccountNumber"></label>
                     <input placeholder="Ex: 0866616508" asp-for="AccountNumber" />
-                    <span asp-validation-for="Amount"></span>
+                    <span class="text-danger" asp-validation-for="Amount"></span>
                     <label asp-for="Amount"></label>
                     <input placeholder="Ex: 10000" asp-for="Amount" />
-                    <span asp-validation-for="Amount"></span>
+                    <span class="text-danger" asp-validation-for="Amount"></span>
                 </div>
                 <div class="modal-footer">
                     <button data-bs-dismiss="modal">Close</button>

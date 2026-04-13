@@ -12,7 +12,7 @@ namespace BankSimulationMVC.Models
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public decimal WithdrawLimit { get; set; } = 500000000;
         public DateTime LastWithdrawDate { get; set; }
-        public DateTime LastAddMonthlyDate { get; set; } = DateTime.Now;
+        public DateTime LastAddInterestMonthlyDate { get; set; } = DateTime.Now;
         public decimal InterestMonthly { get; set; } = 0;
 
         public void UpdateBalance(decimal balance)

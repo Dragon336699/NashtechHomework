@@ -18,19 +18,28 @@
             <div class="d-flex flex-column">
                 <label asp-for="AccountNumber"></label>
                 <input placeholder="Ex: 0866616508" asp-for="AccountNumber" />
-                <span asp-validation-for="AccountNumber"></span>
+                <span asp-validation-for="AccountNumber" class="text-danger"></span>
                 <label asp-for="OwnerName"></label>
                 <input placeholder="Ex: Long" asp-for="OwnerName" />
-                <span asp-validation-for="OwnerName"></span>
+                <span asp-validation-for="OwnerName" class="text-danger"></span>
                 <label asp-for="Balance"></label>
                 <input placeholder="Ex: 0" asp-for="Balance" type="number" />
-                <span asp-validation-for="Balance"></span>
+                <span asp-validation-for="Balance" class="text-danger"></span>
             </div>
-            <button class="pt-2" type="Submit">Create account</button>
+            <button class="mt-2 btn btn-primary" type="Submit">Create account</button>
         </form>
     </div>
 </div>
-<div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
     </div>
-</div>
+}
+else if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}

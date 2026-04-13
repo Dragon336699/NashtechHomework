@@ -19,13 +19,13 @@
                 <div class="modal-body d-flex flex-column">
                     <label asp-for="SourceAccountNumber"></label>
                     <input placeholder="Ex: 0866616508" asp-for="SourceAccountNumber" />
-                    <span asp-validation-for="SourceAccountNumber"></span>
+                    <span class="text-danger" asp-validation-for="SourceAccountNumber"></span>
                     <label asp-for="DestinationAccountNumber"></label>
                     <input placeholder="Ex: 0973585128" asp-for="DestinationAccountNumber" />
-                    <span asp-validation-for="DestinationAccountNumber"></span>
+                    <span class="text-danger" asp-validation-for="DestinationAccountNumber"></span>
                     <label asp-for="Amount"></label>
                     <input placeholder="Ex: 10000" asp-for="Amount" />
-                    <span asp-validation-for="Amount"></span>
+                    <span class="text-danger" asp-validation-for="Amount"></span>
                 </div>
                 <div class="modal-footer">
                     <button data-bs-dismiss="modal">Close</button>

@@ -4,8 +4,6 @@ using BankSimulationMVC.Mapper;
 using BankSimulationMVC.Models;
 using BankSimulationMVC.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Principal;
-using System.Threading.Tasks;
 
 namespace BankSimulationMVC.Services
 {
@@ -31,10 +29,24 @@ namespace BankSimulationMVC.Services
             return accounts.Select(a => a.ToDto());
         }
 
-        public void CreateAccount(Account account)
+        public async Task<ServiceResult> CreateAccount(Account account)
         {
+            var existAccount = await _context.Accounts.FirstOrDefaultAsync(a => a.AccountNumber == account.AccountNumber);
+            if (existAccount != null)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    Message = "Account exist, cannot create."
+                };
+            }
             _context.Accounts.Add(account);
             _context.SaveChanges();
+            return new ServiceResult
+            {
+                IsSuccess = true,
+                Message = "Create account successfully."
+            };
         }
 
         public async Task<ServiceResult> Deposit(DepositVM depositViewModel)

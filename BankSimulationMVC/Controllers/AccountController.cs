@@ -60,11 +60,17 @@ namespace BankSimulationMVC.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(AccountDto accountDto)
+        public async Task<IActionResult> Create(AccountDto accountDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(accountDto);
+            }
+
             Account account = accountDto.ToDomain();
-            _accountService.CreateAccount(account);
-            return RedirectToAction("Index");
+            ServiceResult result = await _accountService.CreateAccount(account);
+            TempData[result.IsSuccess ? "Success" : "Error"] = result.Message;
+            return RedirectToAction("Create");
         }
 
         [HttpPost]
