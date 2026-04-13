@@ -1,0 +1,61 @@
+﻿@using BankSimulationMVC.Enum
+@using BankSimulationMVC.ViewModels
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model AccountViewModel
+<div>
+    <a asp-action="Create" class="btn btn-primary">Create account</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Account Number</th>
+                <th scope="col">Owner Name</th>
+                <th scope="col">Balance</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var acc in Model.Accounts)
+            {
+                <tr>
+                    <td>@acc.AccountNumber</td>
+                    <td>@acc.OwnerName</td>
+                    <td>@acc.Balance</td>
+                    <td>@acc.Status.ToString()</td>
+                    <td class="d-flex gap-2">
+                        <a asp-action="Details" asp-route-id="@acc.AccountNumber" class="btn btn-primary">
+                            View Details
+                        </a>
+                        <form asp-action="ToggleAccountStatus" asp-controller="Account" method="post">
+                            <input type="hidden" name="accountNumber" value="@acc.AccountNumber" />
+
+                            <button class="btn btn-primary" type="submit">
+                                @(acc.Status == AccountStatus.Active ? "Freeze" : "Unfreeze")
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+
+
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+else if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+

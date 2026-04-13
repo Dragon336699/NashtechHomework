@@ -1,0 +1,10 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BankSimulationMVC.ViewModels
+{
+    public class WithDrawVM
+    {
+        public required string AccountNumber { get; set; }
+        public decimal Amount { get; set; }
+    }
+}

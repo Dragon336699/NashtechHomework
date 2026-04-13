@@ -1,0 +1,76 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    int page = (int)ViewBag.Page;
+    int totalPages = (int)ViewBag.TotalPages;
+    string type = ViewBag.Type as string;
+}
+
+@model IEnumerable<Transaction>
+
+<h2>Transaction History</h2>
+<a class="btn btn-primary" href="/Transaction">All</a>
+<a class="btn btn-primary" href="@Url.Action("Index", "Transaction", new {type = "deposit"})">Deposit</a>
+<a class="btn btn-primary" href="@Url.Action("Index", "Transaction", new { type = "withdraw" })">Withdraw</a>
+<a class="btn btn-primary" href="@Url.Action("Index", "Transaction", new { type = "transfer" })">Transfer</a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Account number</th>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.AccountNumber</td>
+                    <td>@item.TransactionDate.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@item.Type</td>
+                    <td>
+                        @item.Amount.ToString("N2")
+                    </td>
+                    <td>@item.Description</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4" class="text-center">No transactions found</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Index", new { page = page - 1, type = ViewBag.Type })" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        @for(int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(i == ViewBag.Page ? "active" : "")">
+                <a class="page-link"
+                   href="@Url.Action("Index", new { page = i, type = ViewBag.Type })">
+                    @i
+                </a>
+            </li>
+        }
+
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Index", new { page = page + 1, type = ViewBag.Type })" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>

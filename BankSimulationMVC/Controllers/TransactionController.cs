@@ -1,0 +1,49 @@
+﻿using BankSimulationMVC.Enum;
+using BankSimulationMVC.Interfaces;
+using BankSimulationMVC.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+
+namespace BankSimulationMVC.Controllers
+{
+    public class TransactionController : Controller
+    {
+        private int pageSize = 8;
+        private readonly ITransactionService _transactionService;
+        public TransactionController(ITransactionService transactionService)
+        {
+            _transactionService = transactionService;
+        }
+        public async Task<IActionResult> Index(string type, int page = 1)
+        {
+
+            var query = _transactionService.Query();
+
+            if (!string.IsNullOrEmpty(type))
+            {
+                query = query.Where(x => x.Type.ToString().ToLower() == type);
+            }
+
+            var totalItems = await query.CountAsync();
+            var totalPages = (int)Math.Ceiling((double) totalItems / pageSize);
+
+            var transactions = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            ViewBag.Page = page;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.Type = type;
+
+            return View(transactions);
+        }
+
+        public IActionResult History(string id)
+        {
+            List<Transaction> transactions = _transactionService.GetTransactionById(id);
+            return View(transactions);
+        }
+    }
+}

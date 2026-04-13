@@ -1,0 +1,34 @@
+﻿@using BankSimulationMVC.ViewModels
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model DepositVM
+
+<div class="modal fade" id="depositModel" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form asp-action="Deposit" asp-controller="Account">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Deposit</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex flex-column">
+                    <label asp-for="AccountNumber"></label>
+                    <input placeholder="Ex: 0866616508" asp-for="AccountNumber" readonly/>
+                    <span asp-validation-for="Amount"></span>
+                    <label asp-for="Amount"></label>
+                    <input step="1" placeholder="Ex: 10000" asp-for="Amount" />
+                    <span asp-validation-for="Amount"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                    <button type="Submit">Deposit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
