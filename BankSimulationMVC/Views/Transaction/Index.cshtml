@@ -1,4 +1,5 @@
-﻿@*
+﻿@using BankSimulationMVC.ViewModels;
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
@@ -7,13 +8,25 @@
     string type = ViewBag.Type as string;
 }
 
-@model IEnumerable<Transaction>
+@model TransactionVM
 
 <h2>Transaction History</h2>
-<a class="btn btn-primary" href="/Transaction">All</a>
-<a class="btn btn-primary" href="@Url.Action("Index", "Transaction", new {type = "deposit"})">Deposit</a>
-<a class="btn btn-primary" href="@Url.Action("Index", "Transaction", new { type = "withdraw" })">Withdraw</a>
-<a class="btn btn-primary" href="@Url.Action("Index", "Transaction", new { type = "transfer" })">Transfer</a>
+<div class="d-flex justify-content-between">
+    <div>
+        <a class="btn btn-primary" href="/Transaction">All</a>
+        <a class="btn btn-primary" href="@Url.Action("Index", "Transaction", new { type = "deposit" })">Deposit</a>
+        <a class="btn btn-primary" href="@Url.Action("Index", "Transaction", new { type = "withdraw" })">Withdraw</a>
+        <a class="btn btn-primary" href="@Url.Action("Index", "Transaction", new { type = "transfer" })">Transfer</a>
+    </div>
+    <div>
+        <form asp-action="History" asp-controller="Transaction">
+            <input placeholder="Ex: 0973585128" asp-for="AccountNumber" />
+            <span class="text-danger" asp-validation-for="AccountNumber"></span>
+            <button class="btn btn-primary">Search transactions</button>
+        </form>
+    </div>
+</div>
+
 
 <table class="table table-bordered table-striped">
     <thead>
@@ -26,9 +39,9 @@
         </tr>
     </thead>
     <tbody>
-        @if (Model != null && Model.Any())
+        @if (Model != null && Model.Transactions.Any())
         {
-            foreach (var item in Model)
+            foreach (var item in Model.Transactions)
             {
                 <tr>
                     <td>@item.AccountNumber</td>

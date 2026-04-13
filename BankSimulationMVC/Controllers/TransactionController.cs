@@ -1,9 +1,8 @@
-﻿using BankSimulationMVC.Enum;
-using BankSimulationMVC.Interfaces;
+﻿using BankSimulationMVC.Interfaces;
 using BankSimulationMVC.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using BankSimulationMVC.ViewModels;
 
 namespace BankSimulationMVC.Controllers
 {
@@ -26,7 +25,7 @@ namespace BankSimulationMVC.Controllers
             }
 
             var totalItems = await query.CountAsync();
-            var totalPages = (int)Math.Ceiling((double) totalItems / pageSize);
+            var totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
 
             var transactions = await query
                 .Skip((page - 1) * pageSize)
@@ -37,12 +36,17 @@ namespace BankSimulationMVC.Controllers
             ViewBag.TotalPages = totalPages;
             ViewBag.Type = type;
 
-            return View(transactions);
+            TransactionVM transactionVM = new TransactionVM
+            {
+                Transactions = transactions
+            };
+
+            return View(transactionVM);
         }
 
-        public IActionResult History(string id)
+        public IActionResult History(string accountNumber)
         {
-            List<Transaction> transactions = _transactionService.GetTransactionById(id);
+            List<Transaction> transactions = _transactionService.GetTransactionById(accountNumber);
             return View(transactions);
         }
     }
