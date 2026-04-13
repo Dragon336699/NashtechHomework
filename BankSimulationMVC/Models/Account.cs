@@ -11,10 +11,18 @@ namespace BankSimulationMVC.Models
         public AccountStatus Status { get; set; } = AccountStatus.Active;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public decimal WithdrawLimit { get; set; } = 500000000;
+        public DateTime LastWithdrawDate { get; set; }
+        public DateTime LastAddMonthlyDate { get; set; } = DateTime.Now;
+        public decimal InterestMonthly { get; set; } = 0;
 
         public void UpdateBalance(decimal balance)
         {
             Balance = balance;
+        }
+
+        public void ResetWithdrawLimit()
+        {
+            WithdrawLimit = 500000000;
         }
     }
 }

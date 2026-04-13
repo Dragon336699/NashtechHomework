@@ -4,11 +4,14 @@ using BankSimulationMVC.Mapper;
 using BankSimulationMVC.Models;
 using BankSimulationMVC.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Principal;
+using System.Threading.Tasks;
 
 namespace BankSimulationMVC.Services
 {
     public class AccountService : IAccountService
     {
+        private readonly decimal yearInterest = 0.08m;
         private readonly BankDbContext _context;
         public AccountService(BankDbContext context)
         {
@@ -132,6 +135,11 @@ namespace BankSimulationMVC.Services
                 return new ServiceResult { IsSuccess = false, Message = "Minimal balace must be 100." };
             }
 
+            if (DateTime.Now.Day > account.LastWithdrawDate.Day)
+            {
+                account.ResetWithdrawLimit();
+            }
+
             if (account.WithdrawLimit - withdrawViewModel.Amount < 0)
             {
                 return new ServiceResult { IsSuccess = false, Message = "The withdrawal limit is used up." };
@@ -139,7 +147,10 @@ namespace BankSimulationMVC.Services
 
 
             account.UpdateBalance(newBalance);
+
             account.WithdrawLimit -= withdrawViewModel.Amount;
+            account.LastWithdrawDate = DateTime.Now;
+
             Transaction transaction = new Transaction
             {
                 AccountNumber = account.AccountNumber,
@@ -177,6 +188,11 @@ namespace BankSimulationMVC.Services
                     };
                 }
 
+                if (DateTime.Now.Day > sourceAccount.LastWithdrawDate.Day)
+                {
+                    sourceAccount.ResetWithdrawLimit();
+                }
+
                 var validation = ValidateTransfer(sourceAccount, destinationAccount, transferViewModel.Amount);
                 if (validation != null)
                     return validation;
@@ -185,6 +201,7 @@ namespace BankSimulationMVC.Services
                 destinationAccount.UpdateBalance(destinationAccount.Balance + transferViewModel.Amount);
 
                 sourceAccount.WithdrawLimit -= transferViewModel.Amount;
+                sourceAccount.LastWithdrawDate = DateTime.Now;
 
                 Transaction logTransactionSource = new Transaction
                 {
@@ -249,6 +266,26 @@ namespace BankSimulationMVC.Services
                 IsSuccess = true,
                 Message = $"{action} account {accountNumber} successfully."
             };
+        }
+
+        public async Task ProcessMonthlyInterest()
+        {
+            var accounts = await _context.Accounts.ToListAsync();
+            var today = DateTime.Today;
+
+            foreach (var account in accounts)
+            {
+                var dailyInterest = account.Balance * yearInterest / 365;
+                account.InterestMonthly += dailyInterest;
+
+                if (today.Day == 10)
+                {
+                    account.UpdateBalance(account.Balance + account.InterestMonthly);
+                    account.InterestMonthly = 0;
+                }
+            }
+
+            await _context.SaveChangesAsync();
         }
 
         private ServiceResult? ValidateTransfer(Account source, Account destination, decimal amount)

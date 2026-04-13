@@ -12,5 +12,6 @@ namespace BankSimulationMVC.Interfaces
         Task<AccountDto?> GetAccountDetails(string accountNumber);
         Task<ServiceResult> Transfer(TransferVM transferViewModel);
         Task<ServiceResult> ToggleAccountStatus(string accountNumber);
+        Task ProcessMonthlyInterest();
     }
 }

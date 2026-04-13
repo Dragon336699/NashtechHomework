@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddServices();
+builder.Services.AddHostedService<InterestMonthlyService>();
 
 builder.Services.AddDbContext<BankDbContext>(options =>
     options.UseSqlite("Data source=bank.db")
