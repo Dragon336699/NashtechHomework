@@ -11,6 +11,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAccountSimulationTest",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankSimulationMVC", "BankSimulationMVC\BankSimulationMVC.csproj", "{446A5AC9-BE9F-4C96-940A-5227B40A1A07}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankSimulationMVC.Infrastructure", "BankSimulationMVC.Infrastructure\BankSimulationMVC.Infrastructure.csproj", "{91C42DFB-422F-4B58-A5A5-9D98B0DB14DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankSimulationMVC.Application", "BankSimulationMVC.Application\BankSimulationMVC.Application.csproj", "{73103F60-7419-4420-BFCF-4A196F3C17D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankSimulationMVC.Domain", "BankSimulationMVC.Domain\BankSimulationMVC.Domain.csproj", "{9CDBD9DC-DFBE-40DA-A6D5-56CAE7EAAFB8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +39,18 @@ Global
 		{446A5AC9-BE9F-4C96-940A-5227B40A1A07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{446A5AC9-BE9F-4C96-940A-5227B40A1A07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{446A5AC9-BE9F-4C96-940A-5227B40A1A07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91C42DFB-422F-4B58-A5A5-9D98B0DB14DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91C42DFB-422F-4B58-A5A5-9D98B0DB14DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91C42DFB-422F-4B58-A5A5-9D98B0DB14DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91C42DFB-422F-4B58-A5A5-9D98B0DB14DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73103F60-7419-4420-BFCF-4A196F3C17D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73103F60-7419-4420-BFCF-4A196F3C17D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73103F60-7419-4420-BFCF-4A196F3C17D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73103F60-7419-4420-BFCF-4A196F3C17D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CDBD9DC-DFBE-40DA-A6D5-56CAE7EAAFB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CDBD9DC-DFBE-40DA-A6D5-56CAE7EAAFB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CDBD9DC-DFBE-40DA-A6D5-56CAE7EAAFB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CDBD9DC-DFBE-40DA-A6D5-56CAE7EAAFB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

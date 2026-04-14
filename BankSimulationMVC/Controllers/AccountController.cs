@@ -1,8 +1,10 @@
-﻿using BankSimulationMVC.Interfaces;
+﻿using BankSimulationMVC.Interfaces.Services;
 using BankSimulationMVC.Mapper;
-using BankSimulationMVC.Models;
-using BankSimulationMVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using BankSimulationMVC.Domain.Entities;
+using BankSimulationMVC.Application.Dtos.ViewModels;
+using BankSimulationMVC.Application.Dtos.Responses;
+using BankSimulationMVC.Application.Dtos.Requests;
 
 namespace BankSimulationMVC.Controllers
 {
@@ -15,8 +17,8 @@ namespace BankSimulationMVC.Controllers
         }
         public IActionResult Index()
         {
-            IEnumerable<AccountDto> allAccounts = _accountService.GetAllAccounts();
-            AccountViewModel viewModel = new AccountViewModel
+            IEnumerable<AccountVM> allAccounts = _accountService.GetAllAccounts();
+            AccountPageVM viewModel = new AccountPageVM
             {
                 Accounts = allAccounts
             };
@@ -60,7 +62,7 @@ namespace BankSimulationMVC.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Create(AccountDto accountDto)
+        public async Task<IActionResult> Create(AccountRequest accountDto)
         {
             if (!ModelState.IsValid)
             {
@@ -76,6 +78,17 @@ namespace BankSimulationMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Deposit(DepositVM depositViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                var errorMessage = string.Join(" | ",
+                    ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage));
+
+                TempData["Error"] = errorMessage;
+                return RedirectToAction($"Details", new { id = depositViewModel.AccountNumber });
+            }
+
             ServiceResult result = await _accountService.Deposit(depositViewModel);
             TempData[result.IsSuccess ? "Success" : "Error"] = result.Message;
             return RedirectToAction($"Details", new {id = depositViewModel.AccountNumber});
@@ -84,6 +97,17 @@ namespace BankSimulationMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> WithDraw(WithDrawVM withdrawViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                var errorMessage = string.Join(" | ",
+                    ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage));
+
+                TempData["Error"] = errorMessage;
+                return RedirectToAction($"Details", new { id = withdrawViewModel.AccountNumber });
+            }
+
             ServiceResult result = await _accountService.Withdraw(withdrawViewModel);
             TempData[result.IsSuccess ? "Success" : "Error"] = result.Message;
             return RedirectToAction($"Details", new { id = withdrawViewModel.AccountNumber });
@@ -91,9 +115,19 @@ namespace BankSimulationMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Transfer(TransferVM transferViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                var errorMessage = string.Join(" | ",
+                    ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage));
+
+                TempData["Error"] = errorMessage;
+                return RedirectToAction($"Details", new { id = transferViewModel.SourceAccountNumber });
+            }
+
             ServiceResult result = await _accountService.Transfer(transferViewModel);
             TempData[result.IsSuccess ? "Success" : "Error"] = result.Message;
-            Console.WriteLine(result.Message);
             return RedirectToAction($"Details", new { id = transferViewModel.SourceAccountNumber });
         }
 

@@ -1,4 +1,4 @@
-using BankSimulationMVC.Models;
+using BankSimulationMVC.Application.Dtos.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

@@ -1,4 +1,5 @@
-﻿@using BankSimulationMVC.ViewModels
+﻿@using BankSimulationMVC.Application.Dtos.Responses
+@using BankSimulationMVC.Application.Dtos.Requests
 
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -6,7 +7,7 @@
 @{
 }
 
-@model AccountDto
+@model AccountRequest
 
 
 <div class="card">
@@ -22,9 +23,9 @@
                 <label asp-for="OwnerName"></label>
                 <input placeholder="Ex: Long" asp-for="OwnerName" />
                 <span asp-validation-for="OwnerName" class="text-danger"></span>
-                <label asp-for="Balance"></label>
-                <input placeholder="Ex: 0" asp-for="Balance" type="number" />
-                <span asp-validation-for="Balance" class="text-danger"></span>
+                <label asp-for="InitialBalance"></label>
+                <input placeholder="Ex: 0" asp-for="InitialBalance" type="number" />
+                <span asp-validation-for="InitialBalance" class="text-danger"></span>
             </div>
             <button class="mt-2 btn btn-primary" type="Submit">Create account</button>
         </form>

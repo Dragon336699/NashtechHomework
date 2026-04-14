@@ -1,5 +1,10 @@
+using BankSimulationMVC.Application.Validation.Accounts;
+using BankSimulationMVC.BackgroundServices;
 using BankSimulationMVC.Data;
+using BankSimulationMVC.Infrastructure.Persistence.Seed;
 using BankSimulationMVC.Services;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,10 +12,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddServices();
-builder.Services.AddHostedService<InterestMonthlyService>();
+builder.Services.AddHostedService<InterestService>();
+
+builder.Services.AddValidatorsFromAssemblyContaining<AccountDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<DepositValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<WithdrawValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<TransferValidator>();
+
+builder.Services.AddFluentValidationAutoValidation();
 
 builder.Services.AddDbContext<BankDbContext>(options =>
-    options.UseSqlite("Data source=bank.db")
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
 var app = builder.Build();
@@ -35,5 +47,10 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+using (var scope = app.Services.CreateScope())
+{
+    var runner = scope.ServiceProvider.GetRequiredService<SeederRunner>();
+    await runner.RunAsync();
+}
 
 app.Run();

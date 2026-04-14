@@ -1,8 +1,8 @@
-﻿using BankSimulationMVC.Interfaces;
-using BankSimulationMVC.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BankSimulationMVC.ViewModels;
+using BankSimulationMVC.Interfaces.Services;
+using BankSimulationMVC.Domain.Entities;
+using BankSimulationMVC.Application.Dtos.ViewModels;
 
 namespace BankSimulationMVC.Controllers
 {
@@ -46,7 +46,12 @@ namespace BankSimulationMVC.Controllers
 
         public IActionResult History(string accountNumber)
         {
-            List<Transaction> transactions = _transactionService.GetTransactionById(accountNumber);
+            if (!ModelState.IsValid)
+            {
+                return View(accountNumber);
+            }
+
+            IEnumerable<Transaction> transactions = _transactionService.GetTransactionsById(accountNumber);
             return View(transactions);
         }
     }
