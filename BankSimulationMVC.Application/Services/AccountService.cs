@@ -142,11 +142,6 @@ namespace BankSimulationMVC.Services
                 };
             }
 
-            if (newBalance < 100)
-            {
-                return new ServiceResult { IsSuccess = false, Message = "Minimal balace must be 100." };
-            }
-
             if (DateTime.Now.Day > account.LastWithdrawDate.Day)
             {
                 account.ResetWithdrawLimit();
@@ -157,6 +152,10 @@ namespace BankSimulationMVC.Services
                 return new ServiceResult { IsSuccess = false, Message = "The withdrawal limit is used up." };
             }
 
+            if (newBalance < 100)
+            {
+                return new ServiceResult { IsSuccess = false, Message = "Minimal balance must be 100." };
+            }
 
             account.UpdateBalance(newBalance);
 
