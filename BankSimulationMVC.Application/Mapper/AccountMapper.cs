@@ -28,7 +28,7 @@ namespace BankSimulationMVC.Mapper
                 AccountNumber = account.AccountNumber,
                 OwnerName = account.OwnerName,
                 Balance = account.Balance,
-                CreatedAt = DateTime.Now,
+                CreatedAt = account.CreatedAt,
                 Status = account.Status
             };
         }

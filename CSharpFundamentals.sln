@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteApplication", "CSharpFu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAccountSimulation", "BankAccountSimulation\BankAccountSimulation.csproj", "{B3688E0F-C8F1-4AA0-A82C-1FBD35174841}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAccountSimulationTest", "BankAccountSimulationTest\BankAccountSimulationTest.csproj", "{27F6FDEB-E324-46F8-9CAA-44E0FFD7A1FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAccountSimulation.Test", "BankAccountSimulationTest\BankAccountSimulation.Test.csproj", "{27F6FDEB-E324-46F8-9CAA-44E0FFD7A1FB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankSimulationMVC", "BankSimulationMVC\BankSimulationMVC.csproj", "{446A5AC9-BE9F-4C96-940A-5227B40A1A07}"
 EndProject

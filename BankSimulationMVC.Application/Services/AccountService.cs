@@ -40,8 +40,8 @@ namespace BankSimulationMVC.Services
                     Message = "Account exist, cannot create."
                 };
             }
-            _unitOfWork.Accounts.Add(account);
-            _unitOfWork.Complete();
+            await _unitOfWork.Accounts.AddAsync(account);
+            await _unitOfWork.CompleteAsync();
             return new ServiceResult
             {
                 IsSuccess = true,
@@ -66,7 +66,7 @@ namespace BankSimulationMVC.Services
                 return new ServiceResult
                 {
                     IsSuccess = false,
-                    Message = "Deposit money must be greater than 0"
+                    Message = "Deposit money must be greater than 0."
                 };
             }
 
