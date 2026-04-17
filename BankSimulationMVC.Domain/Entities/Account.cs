@@ -16,7 +16,7 @@ namespace BankSimulationMVC.Domain.Entities
 
         public void UpdateBalance(decimal balance)
         {
-            if (balance < 0) return;
+            if (balance < 0) throw new ArgumentException("Balance cannot be negative");
 
             Balance = balance;
         }

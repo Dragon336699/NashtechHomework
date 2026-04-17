@@ -7,7 +7,7 @@ namespace BankSimulationMVC.Interfaces.Services
     {
         IQueryable<Transaction> Query();
         Task<IEnumerable<Transaction>> GetPageTransaction(int page, int pageSize);
-        IEnumerable<Transaction> GetTransactionsById(string accountNumber);
+        IEnumerable<Transaction> GetTransactionsByAccountNumber(string accountNumber);
 
     }
 }

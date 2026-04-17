@@ -17,7 +17,7 @@ namespace BankSimulationMVC.Services
             return await _unitOfWork.Transactions.GetPageTransaction(page, pageSize);
         }
 
-        public IEnumerable<Transaction> GetTransactionsById(string accountNumber)
+        public IEnumerable<Transaction> GetTransactionsByAccountNumber(string accountNumber)
         {
             return _unitOfWork.Transactions.Find(t => t.AccountNumber == accountNumber);
         }

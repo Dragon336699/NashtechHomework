@@ -15,15 +15,20 @@ namespace BankSimulationMVC.BackgroundServices
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                using var scope = _serviceProvider.CreateScope();
-
-                var accountService = scope.ServiceProvider
-                    .GetRequiredService<IAccountService>();
-
-                await accountService.ProcessMonthlyInterest();
+                await DoWorkOnce();
 
                 await Task.Delay(TimeSpan.FromDays(1), stoppingToken);
             }
+        }
+
+        public async Task DoWorkOnce()
+        {
+            using var scope = _serviceProvider.CreateScope();
+
+            var accountService = scope.ServiceProvider
+                .GetRequiredService<IAccountService>();
+
+            await accountService.ProcessMonthlyInterest();
         }
     }
 }

@@ -21,6 +21,7 @@ namespace BankSimulationMVC.Services
             services.AddScoped<ISeeder, AccountSeeder>();
 
             services.AddScoped<SeederRunner>();
+            services.AddScoped<IDateTimeProvider, DateTimeProvider>();
         }
     }
 }

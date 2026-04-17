@@ -8,7 +8,7 @@ namespace BankSimulationMVC.Controllers
 {
     public class TransactionController : Controller
     {
-        private int pageSize = 8;
+        private int pageSize = 10;
         private readonly ITransactionService _transactionService;
         public TransactionController(ITransactionService transactionService)
         {
@@ -48,10 +48,10 @@ namespace BankSimulationMVC.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(accountNumber);
+                return NotFound();
             }
 
-            IEnumerable<Transaction> transactions = _transactionService.GetTransactionsById(accountNumber);
+            IEnumerable<Transaction> transactions = _transactionService.GetTransactionsByAccountNumber(accountNumber);
             return View(transactions);
         }
     }

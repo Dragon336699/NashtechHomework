@@ -1,9 +1,10 @@
-﻿using BankSimulationMVC.Application.Interfaces.UnitOfWork;
-using BankSimulationMVC.Interfaces.Services;
-using BankSimulationMVC.Domain.Entities;
-using BankSimulationMVC.Mapper;
+﻿using BankSimulationMVC.Application.Dtos.Responses;
 using BankSimulationMVC.Application.Dtos.ViewModels;
-using BankSimulationMVC.Application.Dtos.Responses;
+using BankSimulationMVC.Application.Interfaces.Seeds;
+using BankSimulationMVC.Application.Interfaces.UnitOfWork;
+using BankSimulationMVC.Domain.Entities;
+using BankSimulationMVC.Interfaces.Services;
+using BankSimulationMVC.Mapper;
 
 namespace BankSimulationMVC.Services
 {
@@ -11,9 +12,11 @@ namespace BankSimulationMVC.Services
     {
         private readonly decimal yearInterest = 0.08m;
         private readonly IUnitOfWork _unitOfWork;
-        public AccountService(IUnitOfWork unitOfWork)
+        private readonly IDateTimeProvider _dateTimeProvider;
+        public AccountService(IUnitOfWork unitOfWork, IDateTimeProvider dateTimeProvider)
         {
             _unitOfWork = unitOfWork;
+            _dateTimeProvider = dateTimeProvider;
         }
 
         public async Task<AccountVM?> GetAccountDetails(string accountNumber)
@@ -171,7 +174,7 @@ namespace BankSimulationMVC.Services
             };
             _unitOfWork.Transactions.Add(transaction);
             await _unitOfWork.CompleteAsync();
-            return new ServiceResult { IsSuccess = false, Message = $"Withdraw successfully, your new balance is {newBalance}" };
+            return new ServiceResult { IsSuccess = true, Message = $"Withdraw successfully, your new balance is {newBalance}" };
         }
 
         public async Task<ServiceResult> Transfer(TransferVM transferViewModel)
@@ -179,26 +182,10 @@ namespace BankSimulationMVC.Services
             try
             {
                 Account? sourceAccount = await _unitOfWork.Accounts.FirstOrDefaultAsync(a => a.AccountNumber == transferViewModel.SourceAccountNumber);
-                if (sourceAccount == null)
-                {
-                    return new ServiceResult
-                    {
-                        IsSuccess = false,
-                        Message = "Source account not found."
-                    };
-                }
 
                 Account? destinationAccount = await _unitOfWork.Accounts.FirstOrDefaultAsync(a => a.AccountNumber == transferViewModel.DestinationAccountNumber);
-                if (destinationAccount == null)
-                {
-                    return new ServiceResult
-                    {
-                        IsSuccess = false,
-                        Message = "Destination account not found."
-                    };
-                }
 
-                if (DateTime.Now.Day > sourceAccount.LastWithdrawDate.Day)
+                if (DateTime.Now.Day > sourceAccount?.LastWithdrawDate.Day)
                 {
                     sourceAccount.ResetWithdrawLimit();
                 }
@@ -207,8 +194,8 @@ namespace BankSimulationMVC.Services
                 if (validation != null)
                     return validation;
 
-                sourceAccount.UpdateBalance(sourceAccount.Balance - transferViewModel.Amount);
-                destinationAccount.UpdateBalance(destinationAccount.Balance + transferViewModel.Amount);
+                sourceAccount!.UpdateBalance(sourceAccount.Balance - transferViewModel.Amount);
+                destinationAccount?.UpdateBalance(destinationAccount.Balance + transferViewModel.Amount);
 
                 sourceAccount.WithdrawLimit -= transferViewModel.Amount;
                 sourceAccount.LastWithdrawDate = DateTime.Now;
@@ -224,7 +211,7 @@ namespace BankSimulationMVC.Services
 
                 Transaction logTransactionDes = new Transaction
                 {
-                    AccountNumber = destinationAccount.AccountNumber,
+                    AccountNumber = destinationAccount!.AccountNumber,
                     Amount = transferViewModel.Amount,
                     TransactionDate = DateTime.Now,
                     Type = Enum.TransactionType.Transfer,
@@ -279,7 +266,7 @@ namespace BankSimulationMVC.Services
         public async Task ProcessMonthlyInterest()
         {
             var accounts = await _unitOfWork.Accounts.GetAllAsync();
-            var today = DateTime.Today;
+            var today = _dateTimeProvider.Today;
 
             foreach (var account in accounts)
             {
@@ -296,7 +283,7 @@ namespace BankSimulationMVC.Services
             await _unitOfWork.CompleteAsync();
         }
 
-        private ServiceResult? ValidateTransfer(Account source, Account destination, decimal amount)
+        private ServiceResult? ValidateTransfer(Account? source, Account? destination, decimal amount)
         {
             if (source == null)
                 return Fail("Source account not found.");
@@ -314,7 +301,7 @@ namespace BankSimulationMVC.Services
                 return Fail("Your balance is not enough.");
             if (source.WithdrawLimit - amount < 0)
             {
-                return new ServiceResult { IsSuccess = false, Message = "The withdrawal limit is used up." };
+                return  Fail("The withdrawal limit is used up.");
             }
 
             return null;

@@ -134,6 +134,9 @@ namespace BankSimulationMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> ToggleAccountStatus(string accountNumber)
         {
+            if (string.IsNullOrEmpty(accountNumber))
+                return NotFound();
+
             ServiceResult result = await _accountService.ToggleAccountStatus(accountNumber);
             TempData[result.IsSuccess ? "Success" : "Error"] = result.Message;
             return RedirectToAction("Index");
